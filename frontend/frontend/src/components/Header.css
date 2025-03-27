@@ -1,0 +1,30 @@
+
+
+.cart-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .cart-button svg {
+    fill: black; /* Change the color as needed */
+    width: 30px; /* Adjust the size as needed */
+    height: 30px; /* Adjust the size as needed */
+  }
+  
+  .cart-button:hover svg {
+    fill: #555; /* Change the hover color as needed */
+  }
+  
+  .cart-count {
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: black; /* Change the color as needed */
+  }
+  
