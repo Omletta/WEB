@@ -1,6 +1,6 @@
 import React from 'react';
 import './HomePage.css';
-import backgroundImage from '/Users/hadrienmarle/Documents/GitHub/WEB/frontend/frontend2/MenuCrous/src/img/Perspective+extérieure.jpg'; // Remplacez par le chemin de votre image
+import backgroundImage from '/Users/hadrienmarle/Documents/GitHub/WEB/frontend/frontend/src/img/Perspective+extérieure.jpg'; // Remplacez par le chemin de votre image
 
 const HomePage = () => {
   const handleLoginClick = () => {

@@ -35,6 +35,8 @@
     font-size: 1.5rem;
     margin: 10px 0;
     font-family: 'YourFontFamily', sans-serif; /* Remplacez par la typologie de votre image */
+    opacity : 70%;
+    color: black;
   }
   
   .login-button {
