@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, Routes, Route } from 'react-router-dom';
-import Page2 from './Page2';
-import Page5 from './page5';
+import Page2 from './components/Page2';
+import Page5 from './components/page5';
 import HomePage from './components/HomePage'
 
 function App() {

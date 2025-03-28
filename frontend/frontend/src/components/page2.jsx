@@ -1,24 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './page2.css';
+import Header from './Header';
 
 const Page2 = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ajouter ici la logique de connexion réelle
     navigate('/confirmation'); // Redirection vers la confirmation
   };
   return (
     <div className="login-container">
-      <div className="red-header">
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Logo_Crous_vectoris%C3%A9.svg" 
-          alt="Logo CROUS"
-          className="header-logo"
-        />      
-      </div>
 
+      <Header />
       <form onSubmit={handleSubmit} className="login-form">
         <h2>Connexion au compte CROUS</h2>
         

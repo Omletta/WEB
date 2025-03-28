@@ -1,16 +1,11 @@
 import { Link } from 'react-router-dom';
 import './page5.css';
+import Header from './Header';
 
 const Page5 = () => {
   return (
     <div className="confirmation-container">
-      <div className="red-header">
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Logo_Crous_vectoris%C3%A9.svg" 
-          alt="Logo CROUS" 
-          className="header-logo"
-        />      
-      </div>
+      <Header />
 
       <div className="confirmation-content">
         <div className="checkmark">✓</div>
