@@ -1,27 +1,50 @@
-import { Link, useNavigate } from 'react-router-dom';
-import './page2.css';
-import Header from './Header';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./page2.css";
+import Header from "./Header";
+import axios from "axios";
 
 const Page2 = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/reservation'); // Redirection vers la confirmation
+    setError(""); // clear previous errors
+
+    try {
+      const response = await axios.post("http://localhost:7777/api/login", {
+        username,
+        password,
+      });
+
+      if (response.data.message === "Connexion réussie") {
+        navigate("/reservation");
+      }
+    } catch (err) {
+      setError("Identifiant ou mot de passe incorrect.");
+    }
   };
+
   return (
     <div className="login-container">
-
       <Header />
       <form onSubmit={handleSubmit} className="login-form">
         <h2>Connexion au compte CROUS</h2>
-        
+
+        {error && <p className="error-message">{error}</p>}
+
         <div className="form-group">
           <label htmlFor="username">👤Identifiant</label>
-          <input 
-            type="text" 
-            id="username" 
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Entrez votre identifiant"
+            required
           />
         </div>
 
@@ -30,7 +53,10 @@ const Page2 = () => {
           <input
             type="password"
             id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Entrez votre mot de passe"
+            required
           />
         </div>
 
