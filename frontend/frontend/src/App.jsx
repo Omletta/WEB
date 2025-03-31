@@ -4,6 +4,7 @@ import { Link, Routes, Route } from 'react-router-dom';
 import Page2 from './components/Page2';
 import Page5 from './components/page5';
 import HomePage from './components/HomePage'
+import Page4 from './components//page4';
 
 function App() {
   const [dishes, setDishes] = useState([]);
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Page2 />} />
+        <Route path="/reservation" element={<Page4 />} />
         <Route path="/confirmation" element={<Page5 />} />
       </Routes>
     </div>

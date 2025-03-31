@@ -7,7 +7,7 @@ const Page2 = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/confirmation'); // Redirection vers la confirmation
+    navigate('/reservation'); // Redirection vers la confirmation
   };
   return (
     <div className="login-container">
