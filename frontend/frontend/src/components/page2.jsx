@@ -12,8 +12,7 @@ const Page2 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // clear previous errors
-
+    setError(""); // Reset error message
     try {
       const response = await axios.post("http://localhost:7777/api/login", {
         username,
@@ -21,7 +20,7 @@ const Page2 = () => {
       });
 
       if (response.data.message === "Connexion réussie") {
-        navigate("/reservation");
+        navigate("/Menu");
       }
     } catch (err) {
       setError("Identifiant ou mot de passe incorrect.");
