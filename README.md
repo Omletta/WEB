@@ -19,37 +19,6 @@ Application web pour la gestion des repas au CROUS de Villeurbanne : consultatio
 - **Scraping** : Selenium (Python) + ChromeDriver
 - **Styling** : CSS Modules + Responsive Design
 
-## Structure 📂
-crous-app/
-├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── CartContainer.jsx # Gestion du panier
-│ │ │ ├── Header.jsx # Barre de navigation
-│ │ │ ├── HomePage.jsx # Page d'accueil
-│ │ │ ├── page[2-5].jsx # Pages de l'application
-│ │ ├── App.jsx # Routeur principal
-│ │ ├── main.jsx # Point d'entrée
-│ │ └── index.css # Styles globaux
-│ ├── public/
-│ │ └── index.html # Template HTML
-│ └── package.json
-│
-├── backend/
-│ ├── models/
-│ │ ├── dish.js # Schéma des plats
-│ │ └── user.js # Schéma utilisateurs
-│ ├── routes/
-│ │ ├── authRoutes.js # Authentification
-│ │ ├── dishRoutes.js # Gestion des plats
-│ │ └── menuRoutes.js # API des menus
-│ ├── server.js # Configuration serveur
-│ └── package.json
-│
-├── scrap.py # Script de scraping
-└── README.md
-
-
 ## Amélioration 
 Aprés longue discussion avce les differents organismes de gestion du crous il nous a été recommandé de proposer une solution scalable mais où le payment se ferait en physique. Nous souhaiterions don ner la possibilité aux utilisateur d'ouvrir l'application Izly directement depuis le navigateur pour afficher leur QR code.
 
