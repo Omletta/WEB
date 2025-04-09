@@ -67,14 +67,13 @@ button:focus-visible {
 }
 
 .feed-container > * {
-  flex: 1 1 calc(33.333% - 20px); /* Trois éléments par ligne */
+  flex: 1 1 calc(33.333% - 20px); 
   box-sizing: border-box;
 }
 
-/* Ajoutez des styles pour les petits écrans */
 @media (max-width: 600px) {
   .feed-container > * {
-    flex: 1 1 calc(50% - 20px); /* Deux éléments par ligne sur les petits écrans */
+    flex: 1 1 calc(50% - 20px); 
   }
 }
 

@@ -9,6 +9,7 @@ const Page3 = () => {
     const { addToCart, cartItems } = useContext(CartContext);
     const [menuData, setMenuData] = useState(null);
     const [structuredMenu, setStructuredMenu] = useState(null);
+    const [activeCategory, setActiveCategory] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:7777/api/menu/today')
@@ -18,6 +19,7 @@ const Page3 = () => {
                     setMenuData(data[0]);
                     const organized = organizeMenuFlexibly(data[0]);
                     setStructuredMenu(organized);
+                    setActiveCategory(Object.keys(organized)[0]);
                 }
             })
             .catch(err => console.error('Menu fetch error:', err));
@@ -72,18 +74,27 @@ const Page3 = () => {
             <div className="dish-card" key={`${category}-${idx}`}>
                 <div className="dish-info">
                     <h4>{cleanTitle}</h4>
-                    <p className="dish-price">{points} pt{points > 1 ? 's' : ''}</p>
+                    <div className="dish-meta">
+                        {points > 0 && (
+                            <span className="dish-badge">
+                                {points} pt{points > 1 ? 's' : ''}
+                            </span>
+                        )}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                addToCart({
+                                    title: cleanTitle,
+                                    type: category,
+                                    price: points
+                                });
+                            }}
+                            className="add-to-cart"
+                        >
+                            <span>+</span>
+                        </button>
+                    </div>
                 </div>
-                <button
-                    onClick={() => addToCart({
-                        title: cleanTitle,
-                        type: category,
-                        price: points
-                    })}
-                    className="add-to-cart"
-                >
-                    +
-                </button>
             </div>
         );
     };
@@ -92,7 +103,10 @@ const Page3 = () => {
         return (
             <div className="menu-container">
                 <Header />
-                <div className="loading">Chargement du menu...</div>
+                <div className="loading-screen">
+                    <div className="loading-spinner"></div>
+                    <p>Chargement du menu...</p>
+                </div>
             </div>
         );
     }
@@ -100,29 +114,61 @@ const Page3 = () => {
     return (
         <div className="menu-container">
             <Header />
-            <div className="menu-content">
-                <h2 className="menu-title">Menu du jour - {menuData.date}</h2>
+            
+            <div className="menu-hero">
+                <div className="hero-content">
+                    <h1>Menu du jour</h1>
+                    <p className="menu-date">{
+  menuData.date ? (
+    new Date(menuData.date).toString() !== 'Invalid Date' 
+      ? new Date(menuData.date).toLocaleDateString('fr-FR', { 
+          weekday: 'long', 
+          day: 'numeric', 
+          month: 'long' 
+        })
+      : menuData.date
+  ) : 'Date non disponible'
+}</p>
+                </div>
+                <div className="hero-overlay"></div>
+            </div>
 
-                {Object.entries(structuredMenu).map(([category, items]) => (
-                    <div key={category} className="menu-section">
-                        <h3 className="category-title">{category}</h3>
-                        <div className="dishes-list">
-                            {items.map((item, index) =>
-                                renderMenuItem(item, category, index)
+            <div className="menu-nav">
+                {Object.keys(structuredMenu).map(category => (
+                    <button
+                        key={category}
+                        className={`nav-item ${activeCategory === category ? 'active' : ''}`}
+                        onClick={() => setActiveCategory(category)}
+                    >
+                        {category}
+                    </button>
+                ))}
+            </div>
+
+            <div className="menu-content">
+                {activeCategory && structuredMenu[activeCategory] && (
+                    <div className="menu-section">
+                        <div className="dishes-grid">
+                            {structuredMenu[activeCategory].map((item, index) =>
+                                renderMenuItem(item, activeCategory, index)
                             )}
                         </div>
                     </div>
-                ))}
-
-                {cartItems.length > 0 && (
-                    <button
-                        onClick={() => navigate('/reservation')}
-                        className="confirm-button"
-                    >
-                        Valider mon panier ({cartItems.length})
-                    </button>
                 )}
             </div>
+
+            {cartItems.length > 0 && (
+                <button
+                    onClick={() => navigate('/reservation')}
+                    className="confirm-button floating-btn"
+                >
+                    <span className="cart-count">{cartItems.length}</span>
+                    Valider mon panier
+                    <span className="total-price">
+                        {cartItems.reduce((sum, item) => sum + item.price, 0)} pts
+                    </span>
+                </button>
+            )}
         </div>
     );
 };

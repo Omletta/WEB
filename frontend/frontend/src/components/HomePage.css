@@ -5,7 +5,6 @@
   overflow: hidden;
 }
 
-/* Suppression du .header existant et utilisation du Header component */
 
 .hero-image {
   height: 100%;

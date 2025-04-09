@@ -12,7 +12,6 @@ const Page2 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // ... (keep your existing login logic)
     navigate("/menu");
   };
 

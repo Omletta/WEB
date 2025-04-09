@@ -1,97 +1,252 @@
+:root {
+  --crous-red: #E30613;
+  --crous-dark: #2D2D2D;
+  --crous-light: #FFF5F5;
+  --crous-gray: #F5F5F5;
+  --crous-text: #333333;
+}
+
 .menu-container {
   background-color: white;
   min-height: 100vh;
-  padding-top: 70px;
   width: 100%;
   margin: 0;
+  padding-bottom: 100px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-.menu-content {
-  padding: 20px;
-  max-width: 100%;
-  margin: 0 auto;
-}
-/* ... (rester du CSS inchangé) */
-
-.menu-title {
-  font-size: 1.8rem;
-  color: #E30613;
-  margin-bottom: 25px;
-  text-align: center;
-}
-
-.menu-section {
-  margin-bottom: 30px;
-}
-
-.category-title {
-  font-size: 1.3rem;
-  color: #333;
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #E30613;
-}
-
-.dishes-list {
+.loading-screen {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-
-.dish-card {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #F9F9F9;
+  justify-content: center;
+  height: 70vh;
 }
 
-.dish-info {
-  flex-grow: 1;
-}
-
-.dish-info h4 {
-  margin: 0;
-  font-size: 1rem;
-  color: #333;
-}
-
-.dish-price {
-  margin: 5px 0 0;
-  font-size: 0.9rem;
-  color: #E30613;
-  font-weight: bold;
-}
-
-.add-to-cart {
-  width: 40px;
-  height: 40px;
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--crous-light);
+  border-top-color: var(--crous-red);
   border-radius: 50%;
-  background-color: #E30613;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.menu-hero {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(135deg, #E30613 0%, #A0050E 100%);
   color: white;
-  border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  margin-bottom: 30px;
 }
 
-.confirm-button {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  padding: 15px;
-  background-color: #E30613;
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+  opacity: 0.6;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-top: 60px; 
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.menu-date {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+.menu-nav {
+  display: flex;
+  overflow-x: auto;
+  padding: 0 20px 15px;
+  gap: 10px;
+  scrollbar-width: none;
+  margin-bottom: 20px;
+}
+
+.menu-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  flex: 0 0 auto;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: var(--crous-gray);
+  border: none;
+  color: var(--crous-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-item.active {
+  background: var(--crous-red);
+  color: white;
+  box-shadow: 0 4px 12px rgba(227, 6, 19, 0.3);
+}
+
+.menu-content {
+  padding:0;
+}
+
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.dish-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.dish-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(227, 6, 19, 0.1);
+}
+
+.dish-info h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  color: var(--crous-dark);
+  font-weight: 600;
+}
+
+.dish-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dish-badge {
+  background: var(--crous-light);
+  color: var(--crous-red);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.add-to-cart {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--crous-red);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(227, 6, 19, 0.3);
+}
+
+.add-to-cart:hover {
+  background: #C10510;
+  transform: scale(1.1);
+}
+
+.floating-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 30px;
+  background: var(--crous-red);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(227, 6, 19, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 15px;
   z-index: 100;
+  transition: all 0.3s;
+  max-width: 90%;
+}
+
+.floating-btn:hover {
+  background: #C10510;
+  box-shadow: 0 8px 25px rgba(227, 6, 19, 0.4);
+}
+
+.cart-count {
+  background: white;
+  color: var(--crous-red);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.total-price {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Animation pour l'ajout au panier */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.add-to-cart:active {
+  animation: pulse 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dishes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .menu-hero {
+    height: 180px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+  }
 }
