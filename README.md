@@ -25,7 +25,7 @@ Aprés longue discussion avce les differents organismes de gestion du crous il n
 ## Installation 💻
 
 ### Prérequis
-- Node.js 18.x + Python 3.11+
+- Node.js 18.x + Python 3.11
 - Compte MongoDB Atlas
 - ChromeDriver compatible avec votre version de Chrome
 
