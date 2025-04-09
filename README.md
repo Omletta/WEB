@@ -1,6 +1,6 @@
 # Application CROUS Villeurbanne 🍽️
 
-Application web pour la gestion des repas au CROUS de Villeurbanne : consultation des menus en temps réel, composition de paniers et réservation de créneaux.
+Application web pour la gestion des repas au CROUS de Villeurbanne : consultation des menus en temps réel, composition de paniers et réservation de créneaux. 
 
 ## Fonctionnalités clés ✨
 - **Menu dynamique** données scrapé depuis le site officiel
@@ -19,41 +19,39 @@ Application web pour la gestion des repas au CROUS de Villeurbanne : consultatio
 - **Scraping** : Selenium (Python) + ChromeDriver
 - **Styling** : CSS Modules + Responsive Design
 
-## Structure 
+## Structure 📂
+crous-app/
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── CartContainer.jsx
-│   │   │   ├── Header.jsx
-│   │   │   ├── HomePage.jsx
-│   │   │   ├── page2.jsx
-│   │   │   ├── Page3.jsx
-│   │   │   ├── page4.jsx
-│   │   │   └── page5.jsx
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   ├── index.css
-│   │   └── ...
-│   ├── public/
-│   │   └── index.html
-│   └── package.json
-
+│ ├── src/
+│ │ ├── components/
+│ │ │ ├── CartContainer.jsx # Gestion du panier
+│ │ │ ├── Header.jsx # Barre de navigation
+│ │ │ ├── HomePage.jsx # Page d'accueil
+│ │ │ ├── page[2-5].jsx # Pages de l'application
+│ │ ├── App.jsx # Routeur principal
+│ │ ├── main.jsx # Point d'entrée
+│ │ └── index.css # Styles globaux
+│ ├── public/
+│ │ └── index.html # Template HTML
+│ └── package.json
+│
 ├── backend/
-│   ├── models/
-│   │   ├── dish.js
-│   │   └── user.js
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── dishRoutes.js
-│   │   └── menuRoutes.js
-│   ├── server.js
-│   └── package.json
-
-├── scrap.py
+│ ├── models/
+│ │ ├── dish.js # Schéma des plats
+│ │ └── user.js # Schéma utilisateurs
+│ ├── routes/
+│ │ ├── authRoutes.js # Authentification
+│ │ ├── dishRoutes.js # Gestion des plats
+│ │ └── menuRoutes.js # API des menus
+│ ├── server.js # Configuration serveur
+│ └── package.json
+│
+├── scrap.py # Script de scraping
+└── README.md
 
 
 ## Amélioration 
-Aprés longue discussion avce les differents organismes de gestion du crous il nous a été recommandé de proposer une solution scalable mais où le payment se ferait en physique. 
+Aprés longue discussion avce les differents organismes de gestion du crous il nous a été recommandé de proposer une solution scalable mais où le payment se ferait en physique. Nous souhaiterions don ner la possibilité aux utilisateur d'ouvrir l'application Izly directement depuis le navigateur pour afficher leur QR code.
 
 ## Installation 💻
 
