@@ -1,136 +1,129 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Page3.css';
 import Header from './Header';
+import { CartContext } from './CartContainer';
 
 const Page3 = () => {
     const navigate = useNavigate();
-    const [cart, setCart] = useState(0);
+    const { addToCart, cartItems } = useContext(CartContext);
+    const [menuData, setMenuData] = useState(null);
+    const [structuredMenu, setStructuredMenu] = useState(null);
 
-    // Exemple de données de plats (à remplacer par vos données réelles)
-    const dishes = [
-        {
-            type:'Entrée',
-            title: 'Plat 1',
-            price: '12.99€',
-        },
-        {
-            type:'Plat',
-            title: 'Plat 2',
-            price: '14.50€',
-        },
-        {
-            type:'Plat',
-            title: 'Plat 3',
-            price: '14.50€',
-        },
-        {
-            type:'Dessert',
-            title: 'Plat 2',
-            price: '14.50€',
-        }
-    ];
+    useEffect(() => {
+        fetch('http://localhost:7777/api/menu/today')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    setMenuData(data[0]);
+                    const organized = organizeMenuFlexibly(data[0]);
+                    setStructuredMenu(organized);
+                }
+            })
+            .catch(err => console.error('Menu fetch error:', err));
+    }, []);
 
-    const entrees = dishes.filter(dish => dish.type === 'Entrée');
-    const plats = dishes.filter(dish => dish.type === 'Plat');
-    const accompagnement = dishes.filter(dish => dish.type === 'Agompagnement');
-    const dessert = dishes.filter(dish => dish.type === 'Dessert');
+    const organizeMenuFlexibly = (menu) => {
+        const organized = {};
+        let currentCategory = null;
 
+        if (!menu.items || !Array.isArray(menu.items)) return organized;
 
-    const addToCart = () => {
-        setCart(cart + 1);
+        const categoryMarkers = [
+            "Entrée",
+            "Plat végétarien",
+            "Plat viande ou/et poisson",
+            "Accompagnement",
+            "Dessert"
+        ];
+
+        menu.items.forEach(item => {
+            const cleanItem = item.replace(/\n/g, ' ').trim();
+
+            const isCategory = categoryMarkers.some(marker =>
+                cleanItem.toLowerCase().includes(marker.toLowerCase())
+            );
+
+            if (isCategory) {
+                const foundCategory = categoryMarkers.find(marker =>
+                    cleanItem.toLowerCase().includes(marker.toLowerCase())
+                );
+                currentCategory = foundCategory;
+                organized[currentCategory] = [];
+            } else if (currentCategory && cleanItem) {
+                organized[currentCategory].push(cleanItem);
+            }
+        });
+
+        return organized;
     };
 
-    const handleConfirmation = () => {
-        navigate('/reservation');
+    const getPoints = (text, category) => {
+        const match = text.match(/(\d+)\s*pt/);
+        if (category === 'Accompagnement') return 0;
+        return match ? parseInt(match[1], 10) : 0;
     };
+
+    const renderMenuItem = (item, category, idx) => {
+        const points = getPoints(item, category);
+        const cleanTitle = item.replace(/(\d+\s*pts?)/i, '').trim();
+
+        return (
+            <div className="dish-card" key={`${category}-${idx}`}>
+                <div className="dish-info">
+                    <h4>{cleanTitle}</h4>
+                    <p className="dish-price">{points} pt{points > 1 ? 's' : ''}</p>
+                </div>
+                <button
+                    onClick={() => addToCart({
+                        title: cleanTitle,
+                        type: category,
+                        price: points
+                    })}
+                    className="add-to-cart"
+                >
+                    +
+                </button>
+            </div>
+        );
+    };
+
+    if (!menuData || !structuredMenu) {
+        return (
+            <div className="menu-container">
+                <Header />
+                <div className="loading">Chargement du menu...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="menu-container">
             <Header />
-            <div className="cart-float">
-                <div className="cart-icon">
-                    <span>{cart}</span>
-                </div>
-            </div>
-                        <div>
-                        {entrees.length > 0 && (
-                            <div className="menu-content">
-                            <div className="grey-header">Entrées</div>
-                            {entrees.map((dish, index) => (
-                                <div className="dish-item" key={index}>
-                                <div className="dish-details">
-                                    <div className="dish-header">
-                                    <div className="dish-title-price">
-                                        <h3>{dish.title}</h3>
-                                        <span>{dish.price}</span>
-                                    </div>
-                                    <button onClick={addToCart} className="add-to-cart">+</button>
-                                    </div>
-                                </div>
-                                </div>
-                            ))}
-                            </div>
-                        )}
-                        {plats.length > 0 && (
-                            <div className="menu-content">
-                            <div className="grey-header">Plats</div>
-                            {plats.map((dish, index) => (
-                                <div className="dish-item" key={index}>
-                                <div className="dish-details">
-                                    <div className="dish-header">
-                                    <div className="dish-title-price">
-                                        <h3>{dish.title}</h3>
-                                        <span>{dish.price}</span>
-                                    </div>
-                                    <button onClick={addToCart} className="add-to-cart">+</button>
-                                    </div>
-                                </div>
-                                </div>
-                            ))}
-                            </div>
-                        )}
-                        {accompagnement.length > 0 && (
-                            <div className="menu-content">
-                            <div className="grey-header">Accompagnement</div>
-                            {entrees.map((dish, index) => (
-                                <div className="dish-item" key={index}>
-                                <div className="dish-details">
-                                    <div className="dish-header">
-                                    <div className="dish-title-price">
-                                        <h3>{dish.title}</h3>
-                                        <span>{dish.price}</span>
-                                    </div>
-                                    <button onClick={addToCart} className="add-to-cart">+</button>
-                                    </div>
-                                </div>
-                                </div>
-                            ))}
-                            </div>
-                        )}
-                        {dessert.length > 0 && (
-                            <div className="menu-content">
-                            <div className="grey-header">Desserts</div>
-                            {dessert.map((dish, index) => (
-                                <div className="dish-item" key={index}>
-                                <div className="dish-details">
-                                    <div className="dish-header">
-                                    <div className="dish-title-price">
-                                        <h3>{dish.title}</h3>
-                                        <span>{dish.price}</span>
-                                    </div>
-                                    <button onClick={addToCart} className="add-to-cart">+</button>
-                                    </div>
-                                </div>
-                                </div>
-                            ))}
-                            </div>
-                        )}
+            <div className="menu-content">
+                <h2 className="menu-title">Menu du jour - {menuData.date}</h2>
+
+                {Object.entries(structuredMenu).map(([category, items]) => (
+                    <div key={category} className="menu-section">
+                        <h3 className="category-title">{category}</h3>
+                        <div className="dishes-list">
+                            {items.map((item, index) =>
+                                renderMenuItem(item, category, index)
+                            )}
                         </div>
-            
-            <button onClick={handleConfirmation} className="confirm-order">Confirm order</button>
-            
-    </div>
+                    </div>
+                ))}
+
+                {cartItems.length > 0 && (
+                    <button
+                        onClick={() => navigate('/reservation')}
+                        className="confirm-button"
+                    >
+                        Valider mon panier ({cartItems.length})
+                    </button>
+                )}
+            </div>
+        </div>
     );
 };
 

@@ -1,22 +1,21 @@
 import React from 'react';
 import './HomePage.css';
-import backgroundImage from './img/Perspective+extérieure.jpg'; // Remplacez par le chemin de votre image
+import Header from './Header';
 
 const HomePage = () => {
-  const handleLoginClick = () => {
-    // Redirige vers la page de connexion
-    window.location.href = '/login';
-  };
-
   return (
     <div className="home-container">
-      <img src={backgroundImage} alt="Background" className="background-image" />
-      <div className="content">
-        <h1 className="main-title">Crous</h1>
-        <h2 className="subtitle">Villeurbanne</h2>
-        <button className="login-button" onClick={handleLoginClick}>
-          S'identifier
-        </button>
+      <Header />
+      
+      <div className="hero-image">
+        <div className="hero-content">
+          <h1>Bienvenue au CROUS</h1>
+          <p className="subtitle">Villeurbanne</p>
+        </div>
+      </div>
+      
+      <div className="login-section">
+        <a href="/login" className="login-button">Se connecter</a>
       </div>
     </div>
   );
